@@ -2,33 +2,49 @@
 @import "tailwindcss";
 
 /* --- 1. 色の変数を定義する --- */
-/* --- テーマカラーの定義 (CSS変数) --- */
 :root {
   /* ==========================================
-     ★クミアイ化学工業風テーマ (白・ベージュ背景 × 黒文字 × 赤アクセント)
+     ★新ニホンテック様仕様: 緑テーマ (ロゴカラーベース)
      ========================================== */
-  --theme-primary: #222222;    /* 黒・濃いグレー (#222222) - 見出し文字やシックな背景用 */
-  --theme-secondary: #db0a1d; /* コーポレートレッド (#db0a1d) - サブタイトルや装飾用 */
 
-  /* --- 共通カラー --- */
-  --theme-accent: #db0a1d;    /* アクセント（ボタン等）も赤で統一 */
-  --theme-light: #f7f6f2;   /* 薄いベージュ (#f7f6f2) - やわらかい背景用 */
+  /* --- メインカラー --- */
+  --theme-primary: #065f46;     /* 濃い緑 (emerald-800) - 信頼・伝統 */
+  --theme-secondary: #10b981;   /* 明るい緑 (emerald-500) - 技術・革新 */
+
+  /* --- ベース・背景色 --- */
+  --theme-light: #f3f4f6;       /* 薄いグレー (gray-100) - やわらかい画面全体の背景用 */
+  --theme-surface: #ffffff;     /* ピュアホワイト - カードやモーダル、入力フォームの背景用 */
+  --theme-surface-alt: #e5e7eb; /* やや濃いグレー (gray-200) - ヘッダー背景や、セクションの区切り用 */
+
+  /* --- テキスト・ボーダー --- */
+  --theme-text-body: #374151;   /* ミディアムグレー (gray-700) - 長文のテキスト用 */
+  --theme-text-muted: #6b7280;  /* ライトグレー (gray-500) - 補足説明やプレースホルダー用 */
+  --theme-border: #d1d5db;      /* 枠線や分割線用 (gray-300) */
+
+  /* --- アクセント・アクション --- */
+  --theme-accent: #f59e0b;          /* 金色・オレンジ (amber-500) - 強調・アクセント */
+  --theme-accent-hover: #d97706;    /* ホバー用オレンジ (amber-600) - ボタンにマウスを乗せた時 */
+  --theme-accent-muted: #fef3c7;    /* 極薄いオレンジ (amber-100) - 選択中のメニュー背景など */
 }
-
 
 /* --- 2. Tailwindに独自カラーを教える --- */
 @theme {
   --color-primary: var(--theme-primary);
   --color-secondary: var(--theme-secondary);
-  --color-accent: var(--theme-accent);
   --color-light: var(--theme-light);
+  --color-surface: var(--theme-surface);
+  --color-surface-alt: var(--theme-surface-alt);
+  --color-text-body: var(--theme-text-body);
+  --color-text-muted: var(--theme-text-muted);
+  --color-border: var(--theme-border);
+  --color-accent: var(--theme-accent);
+  --color-accent-hover: var(--theme-accent-hover);
+  --color-accent-muted: var(--theme-accent-muted);
 }
-
 
 /* 全ページ共通のスタイル */
 body { 
-    /* エル・ティー・エス様風の細身でスタイリッシュなフォント設定 */
-    font-family: "Noto Sans JP", "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", sans-serif; 
+    font-family: 'Noto Sans JP', sans-serif; 
     font-weight: 400; 
     letter-spacing: 0.05em; 
 }
@@ -40,4 +56,3 @@ footer a {
     position: relative;
     z-index: 20;
 }
-
