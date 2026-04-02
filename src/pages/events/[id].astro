@@ -1,0 +1,93 @@
+---
+// src/pages/events/[id].astro
+import Layout from '../../layouts/Layout.astro';
+import { getEvents } from '../../library/microcms';
+
+// 1. microCMSから全イベントのIDを取得して、ページURL（パス）を自動生成する
+export async function getStaticPaths() {
+  const response = await getEvents({ limit: 100 }); // 最大100件まで取得
+  return response.contents.map((event) => ({
+    params: { id: event.id }, // これがURLの一部になります（例: /events/xxxx/）
+    props: { event }, // 取得したデータそのものをページに渡す
+  }));
+}
+
+// 2. 渡されたデータを受け取る
+const { event } = Astro.props;
+
+// 日付のフォーマット処理 (例: 2026.10.01)
+const dateObj = new Date(event.date);
+const formattedDate = `${dateObj.getFullYear()}.${String(dateObj.getMonth() + 1).padStart(2, '0')}.${String(dateObj.getDate()).padStart(2, '0')}`;
+
+// カテゴリごとの色分け
+let badgeClass = "bg-blue-500";
+if (event.category === "重要") badgeClass = "bg-red-600";
+else if (event.category === "記念式典") badgeClass = "bg-orange-500";
+else if (event.category === "アーカイブ") badgeClass = "bg-gray-500";
+---
+
+<Layout>
+    <main class="pt-32 pb-24 bg-light min-h-screen">
+        <div class="container mx-auto px-4 max-w-4xl">
+            
+            <nav class="text-sm text-gray-500 mb-8 flex items-center">
+                <a href="/#special" class="hover:text-primary transition font-bold"><i class="fas fa-home mr-1"></i>トップページ</a>
+                <span class="mx-3">&gt;</span>
+                <a href="/#special" class="hover:text-primary transition font-bold">イベント</a>
+                <span class="mx-3">&gt;</span>
+                <span class="text-gray-800 truncate">{event.title}</span>
+            </nav>
+
+            <article class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                
+                <div class="p-8 md:p-12 border-b border-gray-100 bg-gray-50/50">
+                    <div class="flex items-center mb-4 text-gray-500 font-bold">
+                        <i class="far fa-clock mr-2"></i> <time>{formattedDate}</time>
+                        {event.category && (
+                            <span class={`${badgeClass} text-white px-3 py-1 rounded text-xs ml-4 tracking-wider shadow-sm`}>
+                                {event.category}
+                            </span>
+                        )}
+                    </div>
+                    
+                    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight">
+                        {event.title}
+                    </h1>
+                    
+                    {event["title-en"] && (
+                        <p class="text-gray-400 font-eng text-lg tracking-widest uppercase">
+                            {event["title-en"]}
+                        </p>
+                    )}
+                </div>
+
+                <div class="p-8 md:p-12">
+                    {event.text && (
+                        <p class="text-gray-700 leading-relaxed mb-10 text-lg border-l-4 border-primary pl-4">
+                            {event.text}
+                        </p>
+                    )}
+
+                    {event.images && event.images.length > 0 && (
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                            {event.images.map((img) => (
+                                <img 
+                                    src={img.url} 
+                                    alt="イベント関連画像" 
+                                    class="w-full h-64 md:h-80 object-cover rounded-xl shadow-sm hover:shadow-md transition duration-300"
+                                />
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </article>
+
+            <div class="text-center mt-12">
+                <a href="/#special" class="inline-flex items-center justify-center bg-white border-2 border-primary text-primary hover:bg-primary hover:text-white font-bold py-3 px-10 rounded-full transition duration-300 shadow-sm">
+                    <i class="fas fa-arrow-left mr-2"></i> 一覧へ戻る
+                </a>
+            </div>
+
+        </div>
+    </main>
+</Layout>
