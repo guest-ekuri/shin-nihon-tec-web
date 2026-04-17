@@ -27,7 +27,7 @@
   --theme-accent-muted: #e6f4ef;    /* 極薄いグリーン - 選択中のメニュー背景や、薄いメッセージの背景用（元の薄い赤から変更） */
 
   --theme-accent-opening: #FFA500;   /* オープニング用のオレンジ */
-  --theme-accent-top: #db0a1d
+  --theme-accent-top: #db0a1d;
 }
 
 
