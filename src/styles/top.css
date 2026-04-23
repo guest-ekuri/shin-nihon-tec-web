@@ -39,13 +39,29 @@
     to { opacity: 1; transform: translateY(0); } 
 }
 
+
+
 /* --- トップページ専用スタイル --- */
 .hero-bg {
     background-image: url('/assets/images/image1.jpg');
+    /* 修正箇所: 高さを100%にし、幅は元の比率を保つ（auto） */
+    background-size: auto 100%; 
+    background-position: right center;
+    /* 追加: 画像がリピート（繰り返し）されるのを防ぐ */
+    background-repeat: no-repeat; 
+    position: relative;
+    /* 画像が届かない左側の領域は、この背景色で塗りつぶされます */
+    /* background-color: #005A30; */
+}
+
+/* --- トップページ専用スタイル --- */
+.hero-bg {
+    background-image: url('/assets/images/image2.jpg');
     background-size: cover;
     background-position: center;
     position: relative;
 }
+
 
 /* パソコン画面のみ背景を固定してパララックス風にする */
 @media (min-width: 768px) {

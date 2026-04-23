@@ -1,19 +1,23 @@
 import { createClient } from "microcms-js-sdk";
 
+// ローカル(import.meta.env)とCloudflare本番(process.env)の両方から安全に取得する
+const serviceDomain = import.meta.env.MICROCMS_SERVICE_DOMAIN || (typeof process !== 'undefined' ? process.env.MICROCMS_SERVICE_DOMAIN : '');
+const apiKey = import.meta.env.MICROCMS_API_KEY || (typeof process !== 'undefined' ? process.env.MICROCMS_API_KEY : '');
+
 export const client = createClient({
-  serviceDomain: import.meta.env.MICROCMS_SERVICE_DOMAIN,
-  apiKey: import.meta.env.MICROCMS_API_KEY,
+  serviceDomain: serviceDomain as string,
+  apiKey: apiKey as string,
 });
 
 // 型定義
 export type Event = {
   id: string;
-  event_title: string;
-  english_title: string;
-  date: string;
-  tags: string;
   content: string;
-  photo_gallery: {
+  date: string;
+  tags: string[];
+  title?: string;
+  english_title?: string;
+  photo_gallery?: {
     fieldId: "photo_item";
     image: { url: string; width: number; height: number };
     photo_title: string;
